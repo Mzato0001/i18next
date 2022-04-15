@@ -1,0 +1,79 @@
+{
+	"name": "@sapphire/plugin-i18next",
+	"version": "2.3.1",
+	"description": "Plugin for @sapphire/framework to support i18next.",
+	"author": "@sapphire",
+	"license": "MIT",
+	"main": "dist/index.js",
+	"module": "dist/index.mjs",
+	"types": "dist/index.d.ts",
+	"typedocMain": "src/index.ts",
+	"exports": {
+		".": {
+			"import": "./dist/index.mjs",
+			"require": "./dist/index.js",
+			"types": "./dist/index.d.ts"
+		},
+		"./register": {
+			"import": "./register.mjs",
+			"require": "./register.js",
+			"types": "./register.d.ts"
+		}
+	},
+	"sideEffects": [
+		"./dist/register.js",
+		"./dist/register.mjs",
+		"./register.js",
+		"./register.mjs"
+	],
+	"homepage": "https://github.com/sapphiredev/plugins/tree/main/packages/i18next",
+	"scripts": {
+		"test": "jest",
+		"lint": "eslint src tests --ext ts --fix",
+		"build": "tsc -b src && yarn esm:register && yarn esm:default",
+		"esm:register": "gen-esm-wrapper dist/register.js dist/register.mjs",
+		"esm:default": "gen-esm-wrapper dist/index.js dist/index.mjs",
+		"prepublishOnly": "yarn build"
+	},
+	"dependencies": {
+		"@sapphire/utilities": "^3.6.1",
+		"@types/i18next-fs-backend": "^1.1.2",
+		"chokidar": "^3.5.3",
+		"i18next": "^21.6.14",
+		"i18next-fs-backend": "^1.1.4",
+		"tslib": "^2.3.1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/sapphiredev/plugins.git",
+		"directory": "packages/i18next"
+	},
+	"files": [
+		"dist",
+		"!dist/*.tsbuildinfo",
+		"register.*"
+	],
+	"engines": {
+		"node": ">=v14.0.0",
+		"npm": ">=7.0.0"
+	},
+	"keywords": [
+		"sapphiredev",
+		"plugin",
+		"bot",
+		"typescript",
+		"ts",
+		"yarn",
+		"discord",
+		"sapphire",
+		"i18next",
+		"i18n"
+	],
+	"bugs": {
+		"url": "https://github.com/sapphiredev/plugins/issues"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"gitHead": "f06692aca0e57369da33c55873049db75be504c6"
+}
