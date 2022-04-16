@@ -1,6 +1,6 @@
 import type { Awaitable, NonNullObject } from '@sapphire/utilities';
 import type { WatchOptions } from 'chokidar';
-import type { CommandInteraction, Guild, Message, MessageOptions, StageChannel, StoreChannel, User, VoiceChannel } from 'discord.js';
+import type { CommandInteraction, Guild, InteractionReplyOptions, Message, MessageOptions, StageChannel, StoreChannel, User, VoiceChannel } from 'discord.js';
 import type { InitOptions, StringMap, TFunctionKeys, TOptions } from 'i18next';
 import type { i18nextFsBackend } from 'i18next-fs-backend';
 /**
@@ -105,9 +105,17 @@ export declare type DiscordChannel = TextBasedDiscordChannel | StoreChannel | St
  * This context enables implementation of per-guild, per-channel, and per-user localization.
  */
 export interface InternationalizationContext {
+    /** The {@link Guild} object for which the language should be fetched, or `null` if the language is to be fetched in a DM. */
     guild: Guild | null;
+    /** The {@link DiscordChannel} object for which the language should be fetched. */
     channel: DiscordChannel | null;
-    author: User | null;
+    /**
+     * @deprecated use {@link InternationalizationContext.user} instead. Will be removed in next major version.
+     * The user for which the language should be fetched.
+     */
+    author?: User | null;
+    /** The user for which the language should be fetched. */
+    user: User | null;
 }
 export interface InternationalizationClientOptions {
     i18n?: InternationalizationOptions;
@@ -116,8 +124,14 @@ export interface I18nextFormatters {
     name: string;
     format(value: any, lng: string | undefined, options: any): string;
 }
+export interface LocalizedInteractionReplyOptions<TKeys extends TFunctionKeys = string, TInterpolationMap extends NonNullObject = StringMap> extends PartialLocalizedInteractionReplyOptions<TInterpolationMap> {
+    keys: TKeys | TKeys[];
+}
 export interface LocalizedMessageOptions<TKeys extends TFunctionKeys = string, TInterpolationMap extends NonNullObject = StringMap> extends PartialLocalizedMessageOptions<TInterpolationMap> {
     keys: TKeys | TKeys[];
+}
+export interface PartialLocalizedInteractionReplyOptions<TInterpolationMap extends NonNullObject = StringMap> extends Omit<InteractionReplyOptions, 'content'> {
+    formatOptions?: TOptions<TInterpolationMap>;
 }
 export interface PartialLocalizedMessageOptions<TInterpolationMap extends NonNullObject = StringMap> extends Omit<MessageOptions, 'content'> {
     formatOptions?: TOptions<TInterpolationMap>;

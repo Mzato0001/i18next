@@ -1,7 +1,7 @@
+import { CommandInteraction, Message } from 'discord.js';
 import { NonNullObject } from '@sapphire/utilities';
-import { Message } from 'discord.js';
 import type { StringMap, TFunctionKeys, TFunctionResult, TOptions } from 'i18next';
-import type { ChannelTarget, LocalizedMessageOptions, Target } from './types';
+import type { ChannelTarget, LocalizedInteractionReplyOptions, LocalizedMessageOptions, Target } from './types';
 /**
  * Retrieves the language name for a specific target, using {@link InternationalizationHandler.fetchLanguage}.
  * If {@link InternationalizationHandler.fetchLanguage} is not defined or this function returns a nullish value,
@@ -106,6 +106,43 @@ export declare function replyLocalized<TKeys extends TFunctionKeys = string>(tar
  */
 export declare function replyLocalized<TKeys extends TFunctionKeys = string, TInterpolationMap extends NonNullObject = StringMap>(target: Message, options: LocalizedMessageOptions<TKeys, TInterpolationMap>): Promise<Message>;
 /**
+ * Replies to the interaction using the language `keys` from your i18next language setup.
+ * @since 2.0.0
+ * @param target The interaction to reply to.
+ * @param keys The language keys to be sent.
+ * @example
+ * ```typescript
+ * // Using an object to specify the key to send
+ * await replyLocalized(interaction, 'commands/ping:loading');
+ * // ➡ "Pinging..."
+ * ```
+ */
+export declare function replyLocalized<TKeys extends TFunctionKeys = string>(target: CommandInteraction, keys: TKeys | TKeys[]): Promise<ReturnType<CommandInteraction['reply']>>;
+/**
+ * Replies to the interaction using an object of {@link LocalizedMessageOptions}.
+ * @since 2.0.0
+ * @param target The interaction to reply to.
+ * @param options The options to be sent, requiring at least `keys` to be passed.
+ * @example
+ * ```typescript
+ * // Using an object to specify the key to send
+ * await replyLocalized(interaction, { keys: 'commands/ping:loading' });
+ * // ➡ "Pinging..."
+ * ```
+ * @example
+ * ```typescript
+ * // Passing interpolation options into i18next
+ * const latency = 42;
+ *
+ * await replyLocalized(interaction, {
+ * 	keys: 'commands/ping:loading',
+ * 	formatOptions: { latency }
+ * });
+ * // ➡ "Pinging... current latency is 42ms."
+ * ```
+ */
+export declare function replyLocalized<TKeys extends TFunctionKeys = string, TInterpolationMap extends NonNullObject = StringMap>(target: CommandInteraction, options: LocalizedInteractionReplyOptions<TKeys, TInterpolationMap>): Promise<ReturnType<CommandInteraction['reply']>>;
+/**
  * Edits a message using the language `keys` from your i18next language setup.
  * @since 2.0.0
  * @param target The message to edit.
@@ -143,4 +180,42 @@ export declare function editLocalized<TKeys extends TFunctionKeys = string>(targ
  * ```
  */
 export declare function editLocalized<TKeys extends TFunctionKeys = string, TInterpolationMap extends NonNullObject = StringMap>(target: Message, options: LocalizedMessageOptions<TKeys, TInterpolationMap>): Promise<Message>;
+/**
+ * Edits a deferred/replied interaction using the language `keys` from your i18next language setup.
+ * @since
+ * @param target The interaction to editReply.
+ * @param options The language keys to be sent.
+ * @example
+ * ```typescript
+ * // Using a string to specify the key to send
+ * await editLocalized(interaction, 'commands/ping:fail');
+ * // ➡ "Pong!"
+ * ```
+ */
+export declare function editLocalized<TKeys extends TFunctionKeys = string>(target: CommandInteraction, keys: TKeys | TKeys[]): Promise<ReturnType<CommandInteraction['editReply']>>;
+/**
+ * Edits a deferred/replied interaction using an objects option.
+ * @since
+ * @param target The interaction to editReply.
+ * @param options The options to be sent, requiring at least `keys` to be passed.
+ * @example
+ * ```typescript
+ * // Using an object to specify the key to send
+ * await editLocalized(interaction, { keys: 'commands/ping:fail' });
+ * // ➡ "Pong!"
+ * ```
+ * @example
+ * ```typescript
+ * // Passing interpolation options into i18next
+ * const latency = 42;
+ * const took = 96;
+ *
+ * await editLocalized(interaction, {
+ * 	keys: 'commands/ping:success',
+ * 	formatOptions: { latency, took }
+ * });
+ * // ➡ "Pong! Took me 96ms to reply, and my heart took 42ms to beat!"
+ * ```
+ */
+export declare function editLocalized<TKeys extends TFunctionKeys = string, TInterpolationMap extends NonNullObject = StringMap>(target: CommandInteraction, options: LocalizedInteractionReplyOptions<TKeys, TInterpolationMap>): Promise<ReturnType<CommandInteraction['editReply']>>;
 //# sourceMappingURL=functions.d.ts.map

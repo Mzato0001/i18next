@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.editLocalized = exports.replyLocalized = exports.sendLocalized = exports.resolveKey = exports.fetchT = exports.fetchLanguage = void 0;
+const discord_js_1 = require("discord.js");
 const pieces_1 = require("@sapphire/pieces");
 const utilities_1 = require("@sapphire/utilities");
-const discord_js_1 = require("discord.js");
 /**
  * Retrieves the language name for a specific target, using {@link InternationalizationHandler.fetchLanguage}.
  * If {@link InternationalizationHandler.fetchLanguage} is not defined or this function returns a nullish value,
@@ -19,22 +19,22 @@ const discord_js_1 = require("discord.js");
 function fetchLanguage(target) {
     // Handle CommandInteraction:
     if (target instanceof discord_js_1.CommandInteraction) {
-        return resolveLanguage({ author: target.user, channel: target.channel, guild: target.guild });
+        return resolveLanguage({ user: target.user, channel: target.channel, guild: target.guild });
     }
     // Handle Message:
     if (target instanceof discord_js_1.Message) {
-        return resolveLanguage({ author: target.author, channel: target.channel, guild: target.guild });
+        return resolveLanguage({ user: target.author, channel: target.channel, guild: target.guild });
     }
     // Handle Guild:
     if (target instanceof discord_js_1.Guild) {
-        return resolveLanguage({ author: null, channel: null, guild: target });
+        return resolveLanguage({ user: null, channel: null, guild: target });
     }
     // Handle DMChannel:
     if (target.type === 'DM') {
-        return resolveLanguage({ author: null, channel: target, guild: null });
+        return resolveLanguage({ user: null, channel: target, guild: null });
     }
     // Handle any other channel:
-    return resolveLanguage({ author: null, channel: target, guild: target.guild });
+    return resolveLanguage({ user: null, channel: target, guild: target.guild });
 }
 exports.fetchLanguage = fetchLanguage;
 /**
@@ -69,6 +69,11 @@ async function replyLocalized(target, options) {
 }
 exports.replyLocalized = replyLocalized;
 async function editLocalized(target, options) {
+    // Handle CommandInteraction:
+    if (target instanceof discord_js_1.CommandInteraction) {
+        return target.editReply(await resolveOverloads(target, options));
+    }
+    // Handle Message:
     return target.edit(await resolveOverloads(target, options));
 }
 exports.editLocalized = editLocalized;
