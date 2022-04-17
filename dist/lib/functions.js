@@ -4,6 +4,7 @@ exports.editLocalized = exports.replyLocalized = exports.sendLocalized = exports
 const pieces_1 = require("@sapphire/pieces");
 const utilities_1 = require("@sapphire/utilities");
 const discord_js_1 = require("discord.js");
+const util_1 = require("util");
 /**
  * Retrieves the language name for a specific target, using {@link InternationalizationHandler.fetchLanguage}.
  * If {@link InternationalizationHandler.fetchLanguage} is not defined or this function returns a nullish value,
@@ -19,22 +20,22 @@ const discord_js_1 = require("discord.js");
 function fetchLanguage(target) {
     // Handle Interactions:
     if (target instanceof discord_js_1.BaseCommandInteraction || target instanceof discord_js_1.MessageComponentInteraction) {
-        return resolveLanguage({ channel: target.channel, guild: target.guild, user: target.user });
+        return resolveLanguage({ user: target.user, channel: target.channel, guild: target.guild });
     }
     // Handle Message:
     if (target instanceof discord_js_1.Message) {
-        return resolveLanguage({ channel: target.channel, guild: target.guild, user: target.author });
+        return resolveLanguage({ user: target.author, channel: target.channel, guild: target.guild });
     }
     // Handle Guild:
     if (target instanceof discord_js_1.Guild) {
-        return resolveLanguage({ channel: null, guild: target, user: null });
+        return resolveLanguage({ user: null, channel: null, guild: target });
     }
     // Handle DMChannel:
     if (target.type === 'DM') {
-        return resolveLanguage({ channel: target, guild: null, user: null });
+        return resolveLanguage({ user: null, channel: target, guild: null });
     }
     // Handle any other channel:
-    return resolveLanguage({ channel: target, guild: target.guild, user: null });
+    return resolveLanguage({ user: null, channel: target, guild: target.guild });
 }
 exports.fetchLanguage = fetchLanguage;
 /**
@@ -65,20 +66,13 @@ async function sendLocalized(target, options) {
 }
 exports.sendLocalized = sendLocalized;
 async function replyLocalized(target, options) {
-    // Handle Interactions:
-    if (target instanceof discord_js_1.BaseCommandInteraction || target instanceof discord_js_1.MessageComponentInteraction) {
-        return target.reply(await resolveOverloads(target, options));
-    }
-    // Handle Message:
     return target.reply(await resolveOverloads(target, options));
 }
 exports.replyLocalized = replyLocalized;
 async function editLocalized(target, options) {
-    // Handle Interactions:
     if (target instanceof discord_js_1.BaseCommandInteraction || target instanceof discord_js_1.MessageComponentInteraction) {
         return target.editReply(await resolveOverloads(target, options));
     }
-    // Handle Message:
     return target.edit(await resolveOverloads(target, options));
 }
 exports.editLocalized = editLocalized;
@@ -87,10 +81,12 @@ exports.editLocalized = editLocalized;
  */
 async function resolveLanguage(context) {
     Object.defineProperty(context, 'author', {
-        get: () => {
-            process.emitWarning("Using InternationalizationContext's `author` property is deprecated and will be removed in the next major version. Use `InternationalizationContext.user` instead.", 'DeprecationWarning');
+        get: (0, util_1.deprecate)(() => {
             return context.user;
-        }
+        }, "InternationalizationContext's `author` property is deprecated and will be removed in the next major version. Please use `InternationalizationContext.user` instead.", 'DeprecationWarning'),
+        set: (0, util_1.deprecate)((val) => {
+            context.user = val;
+        }, "InternationalizationContext's `author` property is deprecated and will be removed in the next major version. Please use `InternationalizationContext.user` instead.", 'DeprecationWarning')
     });
     const lang = await pieces_1.container.i18n.fetchLanguage(context);
     return lang ?? context.guild?.preferredLocale ?? pieces_1.container.i18n.options.defaultName ?? 'en-US';
