@@ -1,6 +1,6 @@
 import type { Awaitable, NonNullObject } from '@sapphire/utilities';
 import type { WatchOptions } from 'chokidar';
-import type { CommandInteraction, Guild, InteractionReplyOptions, Message, MessageOptions, StageChannel, StoreChannel, User, VoiceChannel } from 'discord.js';
+import type { BaseCommandInteraction, Guild, InteractionReplyOptions, Message, MessageComponentInteraction, MessageOptions, StageChannel, StoreChannel, User, VoiceChannel } from 'discord.js';
 import type { InitOptions, StringMap, TFunctionKeys, TOptions } from 'i18next';
 import type { i18nextFsBackend } from 'i18next-fs-backend';
 /**
@@ -137,5 +137,5 @@ export interface PartialLocalizedMessageOptions<TInterpolationMap extends NonNul
     formatOptions?: TOptions<TInterpolationMap>;
 }
 export declare type ChannelTarget = Message | DiscordChannel;
-export declare type Target = ChannelTarget | CommandInteraction | Guild;
+export declare type Target = BaseCommandInteraction | ChannelTarget | Guild | MessageComponentInteraction;
 //# sourceMappingURL=types.d.ts.map

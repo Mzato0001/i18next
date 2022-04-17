@@ -1,5 +1,5 @@
-import { CommandInteraction, Message } from 'discord.js';
 import { NonNullObject } from '@sapphire/utilities';
+import { BaseCommandInteraction, Message, MessageComponentInteraction } from 'discord.js';
 import type { StringMap, TFunctionKeys, TFunctionResult, TOptions } from 'i18next';
 import type { ChannelTarget, LocalizedInteractionReplyOptions, LocalizedMessageOptions, Target } from './types';
 /**
@@ -117,9 +117,9 @@ export declare function replyLocalized<TKeys extends TFunctionKeys = string, TIn
  * // ➡ "Pinging..."
  * ```
  */
-export declare function replyLocalized<TKeys extends TFunctionKeys = string>(target: CommandInteraction, keys: TKeys | TKeys[]): Promise<ReturnType<CommandInteraction['reply']>>;
+export declare function replyLocalized<TKeys extends TFunctionKeys = string>(target: BaseCommandInteraction | MessageComponentInteraction, keys: TKeys | TKeys[]): Promise<ReturnType<(BaseCommandInteraction | MessageComponentInteraction)['reply']>>;
 /**
- * Replies to the interaction using an object of {@link LocalizedMessageOptions}.
+ * Replies to the interaction using an object of {@link LocalizedInteractionReplyOptions}.
  * @since 2.0.0
  * @param target The interaction to reply to.
  * @param options The options to be sent, requiring at least `keys` to be passed.
@@ -141,7 +141,7 @@ export declare function replyLocalized<TKeys extends TFunctionKeys = string>(tar
  * // ➡ "Pinging... current latency is 42ms."
  * ```
  */
-export declare function replyLocalized<TKeys extends TFunctionKeys = string, TInterpolationMap extends NonNullObject = StringMap>(target: CommandInteraction, options: LocalizedInteractionReplyOptions<TKeys, TInterpolationMap>): Promise<ReturnType<CommandInteraction['reply']>>;
+export declare function replyLocalized<TKeys extends TFunctionKeys = string, TInterpolationMap extends NonNullObject = StringMap>(target: BaseCommandInteraction | MessageComponentInteraction, options: LocalizedInteractionReplyOptions<TKeys, TInterpolationMap>): Promise<ReturnType<(BaseCommandInteraction | MessageComponentInteraction)['reply']>>;
 /**
  * Edits a message using the language `keys` from your i18next language setup.
  * @since 2.0.0
@@ -182,7 +182,7 @@ export declare function editLocalized<TKeys extends TFunctionKeys = string>(targ
 export declare function editLocalized<TKeys extends TFunctionKeys = string, TInterpolationMap extends NonNullObject = StringMap>(target: Message, options: LocalizedMessageOptions<TKeys, TInterpolationMap>): Promise<Message>;
 /**
  * Edits a deferred/replied interaction using the language `keys` from your i18next language setup.
- * @since
+ * @since 2.0.0
  * @param target The interaction to editReply.
  * @param options The language keys to be sent.
  * @example
@@ -192,10 +192,10 @@ export declare function editLocalized<TKeys extends TFunctionKeys = string, TInt
  * // ➡ "Pong!"
  * ```
  */
-export declare function editLocalized<TKeys extends TFunctionKeys = string>(target: CommandInteraction, keys: TKeys | TKeys[]): Promise<ReturnType<CommandInteraction['editReply']>>;
+export declare function editLocalized<TKeys extends TFunctionKeys = string>(target: BaseCommandInteraction | MessageComponentInteraction, keys: TKeys | TKeys[]): Promise<ReturnType<(BaseCommandInteraction | MessageComponentInteraction)['editReply']>>;
 /**
  * Edits a deferred/replied interaction using an objects option.
- * @since
+ * @since 2.0.0
  * @param target The interaction to editReply.
  * @param options The options to be sent, requiring at least `keys` to be passed.
  * @example
@@ -217,5 +217,5 @@ export declare function editLocalized<TKeys extends TFunctionKeys = string>(targ
  * // ➡ "Pong! Took me 96ms to reply, and my heart took 42ms to beat!"
  * ```
  */
-export declare function editLocalized<TKeys extends TFunctionKeys = string, TInterpolationMap extends NonNullObject = StringMap>(target: CommandInteraction, options: LocalizedInteractionReplyOptions<TKeys, TInterpolationMap>): Promise<ReturnType<CommandInteraction['editReply']>>;
+export declare function editLocalized<TKeys extends TFunctionKeys = string, TInterpolationMap extends NonNullObject = StringMap>(target: BaseCommandInteraction | MessageComponentInteraction, options: LocalizedInteractionReplyOptions<TKeys, TInterpolationMap>): Promise<ReturnType<(BaseCommandInteraction | MessageComponentInteraction)['editReply']>>;
 //# sourceMappingURL=functions.d.ts.map
