@@ -45,7 +45,7 @@ export declare function resolveKey<TResult extends TFunctionResult = string, TKe
  */
 export declare function sendLocalized<TKeys extends TFunctionKeys = string>(target: ChannelTarget, keys: TKeys | TKeys[]): Promise<Message>;
 /**
- * Send a localized message using options.
+ * Send a localized message using {@link LocalizedMessageOptions}.
  * @since 2.0.0
  * @param target The target to send the message to.
  * @param options A {@link LocalizedMessageOptions} object, requiring at least a `keys` field.
@@ -69,7 +69,7 @@ export declare function sendLocalized<TKeys extends TFunctionKeys = string>(targ
  */
 export declare function sendLocalized<TKeys extends TFunctionKeys = string, TInterpolationMap extends NonNullObject = StringMap>(target: ChannelTarget, options: LocalizedMessageOptions<TKeys, TInterpolationMap>): Promise<Message>;
 /**
- * Replies to another message using the language `keys` from your i18next language setup.
+ * Replies to a message using the language `keys` from your i18next language setup.
  * @since 2.0.0
  * @param target The message to reply to.
  * @param keys The language keys to be sent.
@@ -82,7 +82,7 @@ export declare function sendLocalized<TKeys extends TFunctionKeys = string, TInt
  */
 export declare function replyLocalized<TKeys extends TFunctionKeys = string>(target: Message, keys: TKeys | TKeys[]): Promise<Message>;
 /**
- * Replies to another message using `options`.
+ * Replies to a message using {@link LocalizedMessageOptions}.
  * @since 2.0.0
  * @param target The message to reply to.
  * @param options A {@link LocalizedMessageOptions} object, requiring at least a `keys` field.
@@ -121,11 +121,10 @@ export declare function replyLocalized<TKeys extends TFunctionKeys = string>(tar
     reply: (options: InteractionReplyOptions | MessagePayload | string) => Promise<ReturnType<(BaseCommandInteraction | MessageComponentInteraction)['reply']>>;
 }, keys: TKeys | TKeys[]): Promise<ReturnType<(BaseCommandInteraction | MessageComponentInteraction)['reply']>>;
 /**
- * Replies to the interaction using a {@link LocalizedInteractionReplyOptions} object.
+ * Replies to the interaction using {@link LocalizedInteractionReplyOptions}.
  * @since 2.4.0
  * @param target The interaction to reply to.
- * @param options An object of valid options, requiring at least a `keys` field.
- * @see {@link LocalizedInteractionReplyOptions}
+ * @param options A {@link LocalizedInteractionReplyOptions} object, requiring at least a `keys` field.
  * @example
  * ```typescript
  * // Using an object to specify the key to send
@@ -161,11 +160,10 @@ export declare function replyLocalized<TKeys extends TFunctionKeys = string, TIn
  */
 export declare function editLocalized<TKeys extends TFunctionKeys = string>(target: Message, keys: TKeys | TKeys[]): Promise<Message>;
 /**
- * Edits a message using a {@link LocalizedMessageOptions} object.
+ * Edits a message using {@link LocalizedMessageOptions}.
  * @since 2.0.0
  * @param target The message to edit.
- * @param options An object of valid options, requiring at least a `keys` field.
- * @see {@link LocalizedMessageOptions}
+ * @param options A {@link LocalizedMessageOptions} object, requiring at least a `keys` field.
  * @example
  * ```typescript
  * // Using an object to specify the key to send
@@ -200,11 +198,10 @@ export declare function editLocalized<TKeys extends TFunctionKeys = string, TInt
  */
 export declare function editLocalized<TKeys extends TFunctionKeys = string>(target: BaseCommandInteraction | MessageComponentInteraction, keys: TKeys | TKeys[]): Promise<ReturnType<(BaseCommandInteraction | MessageComponentInteraction)['editReply']>>;
 /**
- * Edits a reply to an interaction, optionally deferred, using a {@link LocalizedInteractionReplyOptions} object.
+ * Edits a reply to an interaction, optionally deferred, using {@link LocalizedInteractionReplyOptions}.
  * @since 2.4.0
  * @param target The interaction to editReply.
  * @param options A {@link LocalizedInteractionReplyOptions} object, requiring at least a `keys` field.
- * @see {@link LocalizedInteractionReplyOptions}
  * @example
  * ```typescript
  * // Using an object to specify the key to send
